@@ -53,7 +53,7 @@ function FilteredEventPage(props) {
     );
   }
 
-  const date = new Date(props.date.numYear, props.date.numMonth - 1);
+  const date = new Date(props.date.year, props.date.month - 1);
 
   return (
     <Fragment>
