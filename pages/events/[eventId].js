@@ -5,6 +5,7 @@ import { getEventById } from "../../dummy-data";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
+import ErrorAlert from "../../components/ui/error-alert";
 
 function EventDetailPage() {
   const router = useRouter();
@@ -13,7 +14,11 @@ function EventDetailPage() {
   const event = getEventById(eventId);
 
   if (!event) {
-    return <p>No Event found!</p>;
+    return (
+      <ErrorAlert>
+        <p>No Event found!</p>;
+      </ErrorAlert>
+    );
   }
 
   return (
