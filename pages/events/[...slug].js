@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import useSWR from "swr";
 
 import { getFilteredEvents } from "../../helpers/api-util";
