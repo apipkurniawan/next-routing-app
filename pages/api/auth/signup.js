@@ -1,5 +1,9 @@
 import { hashPassword } from "../../../lib/auth";
-import { connectDatabase, insertDocument } from "../../../lib/db-util";
+import {
+  connectDatabase,
+  getDocument,
+  insertDocument,
+} from "../../../lib/db-util";
 
 async function handler(req, res) {
   if (req.method === "POST") {
@@ -14,6 +18,13 @@ async function handler(req, res) {
 
     const data = req.body;
     const { email, password } = data;
+
+    const existingUser = await getDocument(client, "users", { email: email });
+    if (existingUser) {
+      res.status(422).json({ message: "User exists already!" });
+      client.close();
+      return;
+    }
 
     const hashedPassword = await hashPassword(password);
 
