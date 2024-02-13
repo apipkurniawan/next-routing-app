@@ -41,7 +41,6 @@ async function handler(req, res) {
     // send data to database (mongodb)
     try {
       const result = await insertDocument(client, "comments", newComment);
-      console.log(result);
       newComment._id = result.insertedId;
       res.status(201).json({ message: "Added comment!", comment: newComment });
     } catch (error) {
