@@ -9,8 +9,10 @@
     "export": "next export"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "mongodb": "^6.3.0",
     "next": "^13.0.7",
+    "next-auth": "3.29.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.33.2",

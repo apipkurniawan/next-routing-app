@@ -2,7 +2,7 @@ import {
   connectDatabase,
   getAllDocuments,
   insertDocument,
-} from "../../../helpers/db-util";
+} from "../../../lib/db-util";
 
 async function handler(req, res) {
   const eventId = req.query.eventId;

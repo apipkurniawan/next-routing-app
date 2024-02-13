@@ -1,4 +1,4 @@
-import { connectDatabase, insertDocument } from "../../helpers/db-util";
+import { connectDatabase, insertDocument } from "../../lib/db-util";
 
 async function handler(req, res) {
   // connect to database (mongodb)

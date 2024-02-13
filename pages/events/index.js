@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import EventList from "../../components/events/event-list";
 import EventsSearch from "../../components/events/events-search";
-import { getAllEvents } from "../../helpers/api-util";
+import { getAllEvents } from "../../lib/api-util";
 import Head from "next/head";
 
 function AllEventsPage(props) {

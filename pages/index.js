@@ -1,6 +1,6 @@
 import Head from "next/head";
 import EventList from "../components/events/event-list";
-import { getFeaturedEvents } from "../helpers/api-util";
+import { getFeaturedEvents } from "../lib/api-util";
 import NewsletterRegistration from "../components/input/newsletter-registration";
 
 // client side

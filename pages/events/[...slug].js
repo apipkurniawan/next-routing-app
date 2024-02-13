@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import useSWR from "swr";
 
-// import { getFilteredEvents } from "../../helpers/api-util";
+// import { getFilteredEvents } from "../../lib/api-util";
 import EventList from "../../components/events/event-list";
 import ResultsTitle from "../../components/events/results-title";
 import Button from "../../components/ui/button";
