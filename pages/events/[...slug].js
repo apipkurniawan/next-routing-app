@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import useSWR from "swr";
 
-import { getFilteredEvents } from "../../helpers/api-util";
+// import { getFilteredEvents } from "../../helpers/api-util";
 import EventList from "../../components/events/event-list";
 import ResultsTitle from "../../components/events/results-title";
 import Button from "../../components/ui/button";
@@ -15,9 +15,11 @@ function FilteredEventsPage(props) {
 
   const filterData = router.query.slug;
 
+  const fetcher = (url) => fetch(url).then((r) => r.json());
+
   const { data, error } = useSWR(
-    "https://nextjs-course-c81cc-default-rtdb.firebaseio.com/events.json",
-    (url) => fetch(url).then((res) => res.json())
+    "https://nextjs-app-6e3db-default-rtdb.firebaseio.com/events.json",
+    fetcher
   );
 
   useEffect(() => {
@@ -38,10 +40,7 @@ function FilteredEventsPage(props) {
   let pageHeadData = (
     <Head>
       <title>Filtered Events</title>
-      <meta
-        name="description"
-        content={`All events for ${numMonth}/${numYear}`}
-      />
+      <meta name="description" content={`A list of filtered events.`} />
     </Head>
   );
 
@@ -65,7 +64,7 @@ function FilteredEventsPage(props) {
       <title>Filtered Events</title>
       <meta
         name="description"
-        content={`All events for ${numMonth}/${numYear}`}
+        content={`All events for ${numMonth}/${numYear}.`}
       />
     </Head>
   );
