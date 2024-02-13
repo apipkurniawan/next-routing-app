@@ -20,6 +20,7 @@ function FilteredEventsPage(props) {
   const { data, error } = useSWR(process.env.api_external, fetcher);
 
   useEffect(() => {
+    console.log("data : ", data);
     if (data) {
       const events = [];
 
@@ -45,7 +46,7 @@ function FilteredEventsPage(props) {
     return (
       <Fragment>
         {pageHeadData}
-        <p className="center">Loading...</p>;
+        <p className="center">Loading...</p>
       </Fragment>
     );
   }
