@@ -1,13 +1,25 @@
-function handler(req, res) {
+import { connectDatabase, insertDocument } from "../../../helpers/db-util";
+async function handler(req, res) {
   const eventId = req.query.eventId;
 
-  if (req.method === "GET") {
-    const dummyList = [
-      { id: "c1", name: "Max", text: "A first comment!" },
-      { id: "c2", name: "Manuel", text: "A second comment!" },
-    ];
+  // connect to database (mongodb)
+  let client;
+  try {
+    client = await connectDatabase();
+  } catch (error) {
+    res.status(500).json({ message: "Connecting to the database failed!" });
+    return;
+  }
 
-    res.status(200).json({ comments: dummyList });
+  if (req.method === "GET") {
+    const db = client.db();
+    const documents = await db
+      .collection("comments")
+      .find()
+      .sort({ _id: -1 })
+      .toArray();
+
+    res.status(200).json({ comments: documents });
   }
 
   if (req.method === "POST") {
@@ -25,16 +37,28 @@ function handler(req, res) {
     }
 
     const newComment = {
-      id: new Date().toISOString(),
       email,
       name,
       text,
+      eventId,
     };
 
-    // TODO : add to database
+    // send data to database (mongodb)
+    try {
+      const result = await insertDocument(client, "comments", newComment);
+      newComment.id = result.insertedId;
+      client.close();
+    } catch (error) {
+      res.status(500).json({ message: "Inserting data failed!" });
+      return;
+    }
 
-    res.status(201).json({ message: "Added comment!" });
+    console.log(result);
+
+    res.status(201).json({ message: "Added comment!", comment: newComment });
   }
+
+  client.close();
 }
 
 export default handler;
