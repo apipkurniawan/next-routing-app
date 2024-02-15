@@ -1,9 +1,11 @@
+import { getSession } from "next-auth/client";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { Fragment } from "react";
+
 import EventList from "../../components/events/event-list";
 import EventsSearch from "../../components/events/events-search";
 import { getAllEvents } from "../../lib/api-util";
-import Head from "next/head";
 
 function AllEventsPage(props) {
   const router = useRouter();
@@ -28,14 +30,36 @@ function AllEventsPage(props) {
 }
 
 // server side
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//   const events = await getAllEvents();
+
+//   return {
+//     props: {
+//       events: events,
+//     },
+//     revalidate: 60,
+//   };
+// }
+
+// server-side page-guard
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req });
   const events = await getAllEvents();
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
       events: events,
+      session,
     },
-    revalidate: 60,
   };
 }
 
